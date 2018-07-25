@@ -108,7 +108,7 @@ public abstract class SignatureXML {
 		return toDocumenteByte(docSigned);
 	}
 
-	protected abstract DataToSign createDataToSign();
+	protected abstract DataToSign createDataToSign() throws IOException;
 
 	protected Document getDocument(String resource) throws IOException {
 		Document doc = null;

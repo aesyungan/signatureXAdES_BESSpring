@@ -40,23 +40,25 @@ public class SignatureXAdESBES extends SignatureXML {
 	}
 
 	@Override
-	protected DataToSign createDataToSign() {
-		DataToSign datosAFirmar = new DataToSign();
-
-		datosAFirmar.setXadesFormat(EnumFormatoFirma.XAdES_BES);
-
-		datosAFirmar.setEsquema(XAdESSchemas.XAdES_132);
-		datosAFirmar.setXMLEncoding("UTF-8");
-		datosAFirmar.setEnveloped(true);
-		datosAFirmar.addObject(new ObjectToSign(new InternObjectToSign("comprobante"), "contenido comprobante", null,
-				"text/xml", null));
-		datosAFirmar.setParentSignNode("comprobante");
-
+	protected DataToSign createDataToSign() throws IOException {
 		Document docToSign = null;
+		DataToSign datosAFirmar = null;
 		try {
+			datosAFirmar=new DataToSign();
+			datosAFirmar.setXadesFormat(EnumFormatoFirma.XAdES_BES);
+
+			datosAFirmar.setEsquema(XAdESSchemas.XAdES_132);
+			datosAFirmar.setXMLEncoding("UTF-8");
+			datosAFirmar.setEnveloped(true);
+			datosAFirmar.addObject(new ObjectToSign(new InternObjectToSign("comprobante"), "contenido comprobante",
+					null, "text/xml", null));
+			datosAFirmar.setParentSignNode("comprobante");
+
 			docToSign = getDocumentFromByte(this.dataOriginal);
 		} catch (IOException ex) {
 			Logger.getLogger(SignatureXAdESBES.class.getName()).log(Level.SEVERE, null, ex);
+			System.out.println("error en DataToSign->" + ex.getMessage());
+			
 		}
 		datosAFirmar.setDocument(docToSign);
 

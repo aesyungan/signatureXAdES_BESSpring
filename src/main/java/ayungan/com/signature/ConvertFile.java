@@ -20,46 +20,100 @@ import java.nio.file.Paths;
  */
 public class ConvertFile {
 
-    public static InputStream toInputStream(byte[] data) throws IOException {
-        InputStream myInputStream = new ByteArrayInputStream(data);
-        return myInputStream;
-    }
+	public static InputStream toInputStream(byte[] data) throws IOException {
+		InputStream myInputStream = new ByteArrayInputStream(data);
+		return myInputStream;
+	}
 
-    public static void saveBytes(byte[] data, String filePath) throws IOException {
-        Path path = Paths.get(filePath);
-        Files.write(path, data);
+	public static void saveBytes(byte[] data, String filePath) throws IOException {
+		Path path = Paths.get(filePath);
+		Files.write(path, data);
 
-        System.out.println("Sing Document Xml Correct ..");
-    }
+		System.out.println("Sing Document Xml Correct ..");
+	}
 
-    public static byte[] readBytesFromFile(String filePath) {
+	public static byte[] readBytesFromFile(String filePath) {
 
-        FileInputStream fileInputStream = null;
-        byte[] bytesArray = null;
+		FileInputStream fileInputStream = null;
+		byte[] bytesArray = null;
 
-        try {
+		try {
 
-            File file = new File(filePath);
-            bytesArray = new byte[(int) file.length()];
+			File file = new File(filePath);
+			bytesArray = new byte[(int) file.length()];
 
-            //read file into bytes[]
-            fileInputStream = new FileInputStream(file);
-            fileInputStream.read(bytesArray);
+			// read file into bytes[]
+			fileInputStream = new FileInputStream(file);
+			fileInputStream.read(bytesArray);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fileInputStream != null) {
-                try {
-                    fileInputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (fileInputStream != null) {
+				try {
+					fileInputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 
-        }
+		}
+		return bytesArray;
+	}
 
-        return bytesArray;
+	public static byte[] toBytes(File file) {
 
-    }
+		FileInputStream fileInputStream = null;
+		byte[] bytesArray = null;
+
+		try {
+
+			bytesArray = new byte[(int) file.length()];
+
+			// read file into bytes[]
+			fileInputStream = new FileInputStream(file);
+			fileInputStream.read(bytesArray);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (fileInputStream != null) {
+				try {
+					fileInputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		return bytesArray;
+
+	}
+
+	public static byte[] toBytes(InputStream in) {
+
+		FileInputStream fileInputStream = null;
+		byte[] bytesArray = null;
+
+		try {
+
+			in.read(bytesArray);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (fileInputStream != null) {
+				try {
+					fileInputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		return bytesArray;
+
+	}
 }
